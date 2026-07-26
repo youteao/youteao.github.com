@@ -6,8 +6,10 @@ categories: default
 tags: test
 ---
  파이썬은 많은 프로그래밍 언어중 쉽게 배울 수 있는 언어입니다.파이썬은 대표적인 c언어와 java보다 빠르고 쉽게 배울 수 있습니다.예를들어,파이썬과 java의'hello world'라는 문장을 출력하는 코드를 보겠습니다.
- 파이썬:###print(hello world)
- java:###public class HelloWorld {
+ 파이썬:
+ ###print(hello world)
+ java:
+ ###public class HelloWorld {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
     }
