@@ -5,6 +5,8 @@ date:   2017-03-24 01:30:13 +0800
 categories: default
 tags: test syntax
 ---
+
+파일 입출력 
 > ```python
 > w = ''
 > a = open("C:/Python/새파일.txt", 'w')
@@ -25,7 +27,7 @@ tags: test syntax
 > ```
 
 
-
+클레스-연습
 > ```python
 > def square(a, b):
 >     return (a+b)*2, a*b
@@ -132,9 +134,7 @@ tags: test syntax
 >     run()
 > ```
 
-
-
-
+클레스-창작
 > ```python
 > # 1. 총기 클래스
 > class Weapon:
@@ -213,4 +213,52 @@ tags: test syntax
 >     def throw_item(self, target):
 >         if not self.is_alive or self.throwable is None:
 >             return
->         print(f"[{self.nickname}]이(가) [{target.nickname}]쪽으로 {self.throwable.
+>         print(f"[{self.nickname}]이(가) [{target.nickname}]쪽으로 {self.throwable.name} 투척!")
+>         self.throwable.use(target)
+> 
+>     def use_heal_item(self):
+>         """회복 아이템을 사용하는 함수"""
+>         if not self.is_alive:
+>             print(f"[{self.nickname}]은(는) 기절하여 회복할 수 없습니다.")
+>             return
+> 
+>         if self.heal_item is None:
+>             print(f"[{self.nickname}]은(는) 가진 회복 아이템이 없습니다!")
+>             return
+> 
+>         print(f"[{self.nickname}]이(가) 가방에서 회복 아이템을 꺼냅니다.")
+>         self.heal_item.use(self)  # 🔗 내 자신(self)을 전달해서 내 체력을 채우게 함!
+> 
+>     def restore_health(self, amount):
+>         """체력을 회복하는 함수"""
+>         self.health += amount
+>         if self.health > 100:
+>             self.health = 100  # 체력은 최대 100까지만 회복 가능
+>         print(f"✨ [{self.nickname}] 체력 회복 완료! 현재 체력: {self.health}")
+> 
+>     def take_damage(self, amount):
+>         self.health -= amount
+>         if self.health <= 0:
+>             self.health = 0
+>             self.is_alive = False
+>             print(f"💀 [{self.nickname}]이(가) 치명상을 입고 로비로 사출되었습니다.")
+>         else:
+>             print(f"🛡️ [{self.nickname}] 남은 체력: {self.health}")
+> 
+> 
+> # --- 객체 생성 및 테스트 ---
+> 
+> kit = FirstAidKit()  # 구급상자 객체 생성 (회복량 75)
+> Drink = EnergyDrink()
+> grenade = Grenade()
+> 
+> # 플레이어가 M416과 구급상자를 가지고 시작 (현재 체력 50 상태)
+> player1 = BattleGroundPlayer(nickname=input('닉네임 설정'),weapon=input("총 선택 :SKS: 75, SCAR-L: 42, AWM: 100, 권총: 25:"), heal_item=kit)
+> player2 = BattleGroundPlayer(nickname=input('닉네임 설정'),weapon=input("총 선택 :SKS: 75, SCAR-L: 42, AWM: 100, 권총: 25:"), heal_item=kit)
+> player1.shoot(player2)
+> player2.throw_item(player1)
+> player1.use_heal_item()
+> player2.use_heal_item()
+> player2.shoot(player1)
+> player1.shoot(player2)
+> ```
