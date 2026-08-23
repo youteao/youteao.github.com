@@ -5,6 +5,47 @@ date:   2017-03-24 01:30:13 +0800
 categories: default
 tags: test syntax
 ---
+> ```python
+> w = ''
+> a = open("C:/Python/새파일.txt", 'w')
+> while True:
+>     b = input("이름을 입력하세요:")
+>     c = input("점수을 입력하세요:")
+>     w = w + (f"{b}:{c} ")
+>     if input("계속하시겠습니까?(y/n):") == "n":
+>         break
+> a.write(w)
+> a.close()
+> a = open("C:/Python/새파일.txt", 'r')
+> while True:
+>     d = a.readline()
+>     if not d: break
+>     print(d)
+> a.close()
+> ```
+
+
+
+> ```python
+> def square(a, b):
+>     return (a+b)*2, a*b
+> def curcle(a):
+>     return a * 6.28, a*a*3.14
+> 
+> 
+> while True:
+>     a = input("1:사각형, 2:원 , 3:종료>>")
+>     if a == '1':
+>         b,c =square(int(input("첫번째 수를 입력하세요:")),int(input("두번째 수를 입력하세요:")))
+>         print(f"사각형의 둘래는{b}, 넒이는{c} 입니다")
+>     elif a == '2':
+>         b,c = curcle(int(input("첫번째 수를 입력하세요:")))
+>         print(f"사각형의 둘래는{b}, 넒이는{c} 입니다")
+>     elif a == '3':
+>         break
+>     else:
+>         print("잘못 입력하였습니다.")
+> ```
 
 주소록 실습
 > ```python
@@ -90,3 +131,86 @@ tags: test syntax
 > if __name__ == "__main__":
 >     run()
 > ```
+
+
+
+
+> ```python
+> # 1. 총기 클래스
+> class Weapon:
+>     def __init__(self, name):
+>         self.name = name
+>         weapon_stats = {"SKS": 75, "SCAR-L": 42, "AWM": 100, "권총": 25}
+>         self.damage = weapon_stats.get(name, 20)
+> 
+> 
+> # 2. 투척류 클래스들 (기존)
+> class Throwable:
+>     def __init__(self, name):
+>         self.name = name
+> 
+>     def use(self, target):
+>         pass
+> 
+> 
+> class Grenade(Throwable):
+>     def __init__(self):
+>         super().__init__("수류탄")
+>         self.damage = 80
+> 
+>     def use(self, target):
+>         print(f"💥 핀을 뽑고 수류탄을 던졌습니다! 쾅! (데미지: {self.damage})")
+>         target.take_damage(self.damage)
+> 
+> 
+> # 3. 🆕 회복 아이템 부모 클래스
+> class HealItem:
+>     def __init__(self, name, heal_amount):
+>         self.name = name
+>         self.heal_amount = heal_amount  # 회복량
+> 
+>     def use(self, player):
+>         """자식 클래스에서 재정의할 회복 함수"""
+>         pass
+> 
+> 
+> # 4. 🆕 구급상자 클래스 (HealItem 상속)
+> class FirstAidKit(HealItem):
+>     def __init__(self):
+>         super().__init__("구급상자", 75)  # 이름과 회복량(75) 전달
+> 
+>     def use(self, player):
+>         print(f"🩹 [{player.nickname}]이(가) 구급상자를 사용하여 상처를 붕대로 감습니다... (체력 +{self.heal_amount})")
+>         player.restore_health(self.heal_amount)
+> 
+> 
+> # 5. 🆕 에너지 음료 클래스 (HealItem 상속)
+> class EnergyDrink(HealItem):
+>     def __init__(self):
+>         super().__init__("에너지 음료", 25)  # 이름과 회복량(25) 전달
+> 
+>     def use(self, player):
+>         print(f" energética 캔을 따서 마십니다! 🥤 [{player.nickname}] (체력 +{self.heal_amount})")
+>         player.restore_health(self.heal_amount)
+> 
+> 
+> # 6. 플레이어 클래스 (회복 아이템 기능 추가)
+> class BattleGroundPlayer:
+>     def __init__(self, nickname, weapon,throwable=None, heal_item=None):
+>         self.nickname = nickname
+>         self.weapon = weapon
+>         self.throwable = throwable
+>         self.heal_item = heal_item  # 🔗 회복 아이템 장착 슬롯 추가
+>         self.health = 100
+>         self.is_alive = True
+> 
+>     def shoot(self, target):
+>         if not self.is_alive or not target.is_alive:
+>             return
+>         print(f"[{self.nickname}]이(가) [{target.nickname}]에게 {self.weapon.name} 사격! 🎯")
+>         target.take_damage(self.weapon.damage)
+> 
+>     def throw_item(self, target):
+>         if not self.is_alive or self.throwable is None:
+>             return
+>         print(f"[{self.nickname}]이(가) [{target.nickname}]쪽으로 {self.throwable.
